@@ -16,6 +16,7 @@ logs/
 .vscode/
 .clangd/
 .cache/
+!external/lib
 
 # files
 compile_commands.json
