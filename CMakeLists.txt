@@ -35,6 +35,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(
     SOURCE_FILES
+    ${SOURCE_DIR}/app.cpp
+    ${SOURCE_DIR}/celestial_body.cpp
+    ${SOURCE_DIR}/solar_system.cpp
     ${SOURCE_DIR}/main.cpp
 )
 
