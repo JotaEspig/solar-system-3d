@@ -20,5 +20,3 @@ logs/
 
 # files
 compile_commands.json
-*.so
-!libaxolote.so
