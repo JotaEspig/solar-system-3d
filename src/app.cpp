@@ -1,3 +1,4 @@
+#include <GLFW/glfw3.h>
 #include <memory>
 #include <sstream>
 
@@ -11,6 +12,21 @@
 #include <celestial_body.hpp>
 #include <solar_system.hpp>
 
+void App::process_input(float delta_t)
+{
+    Window::process_input(delta_t);
+
+    int pause_key_state = glfwGetKey(window, GLFW_KEY_P);
+    if (pause_key_state == GLFW_PRESS && !is_pause_key_press)
+    {
+        is_pause_key_press = true;
+    }
+    else if (pause_key_state == GLFW_RELEASE && is_pause_key_press)
+    {
+        pause = !pause;
+        is_pause_key_press = false;
+    }
+}
 
 void App::main_loop()
 {
@@ -168,14 +184,18 @@ void App::main_loop()
         sstr << original_title << " | " << (int)(1 / dt) << " fps";
         set_title(sstr.str());
 
-        dt *= DT_MULTIPLIER;
+        if (!pause)
+        {
+            dt *= DT_MULTIPLIER;
 
-        // Update celestial bodies
-        for (int i = 0; i < 10; i++)
-            ss.update(dt / 10.0);
+            // Update celestial bodies
+            for (int i = 0; i < 10; i++)
+                ss.update(dt / 10.0);
+
+            scene->update(dt);
+        }
 
         scene->update_camera((float)width() / height());
-        scene->update(dt);
         scene->render();
 
         glfwSwapBuffers(window);
