@@ -17,7 +17,7 @@ public:
 
     std::shared_ptr<CelestialBody> add_celestial_body(
         double mass, glm::vec3 pos, glm::vec3 vel, glm::vec3 color,
-        axolote::Shader shader_program
+        axolote::gl::Shader shader_program
     );
     void update(double dt);
 

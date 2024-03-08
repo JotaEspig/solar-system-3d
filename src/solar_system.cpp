@@ -1,8 +1,11 @@
+#include <memory>
 #include <solar_system.hpp>
+
+#include <axolote/object3d.hpp>
 
 std::shared_ptr<CelestialBody> SolarSystem::add_celestial_body(
     double mass, glm::vec3 pos, glm::vec3 vel, glm::vec3 color,
-    axolote::Shader shader_program
+    axolote::gl::Shader shader_program
 )
 {
     // Create object matrix
@@ -11,8 +14,9 @@ std::shared_ptr<CelestialBody> SolarSystem::add_celestial_body(
 
     // Create body
     std::shared_ptr<CelestialBody> body{new CelestialBody{mass, vel}};
-    axolote::Object3D bodyobj{
-        "./resources/models/sphere/sphere.obj", color, mat};
+    auto bodyobj = std::make_shared<axolote::Object3D>(
+        "./resources/models/sphere/sphere.obj", color, mat
+    );
     body->pos = pos;
     body->add_object(bodyobj);
     body->bind_shader_at(0, shader_program);

@@ -32,7 +32,7 @@ void App::main_loop()
 {
     std::string original_title = title();
 
-    axolote::Shader shader_program(
+    axolote::gl::Shader shader_program(
         "./resources/shaders/def_vertex_shader.glsl",
         "./resources/shaders/def_fragment_shader.glsl"
     );
@@ -58,11 +58,11 @@ void App::main_loop()
 
     // Sun
     std::shared_ptr<CelestialBody> sun = ss.add_celestial_body(
-        333000.0,                    // mass (related to earth)
-        glm::vec3{0.0f, 0.0f, 0.0f}, // pos
-        glm::vec3{0.0, 0.0f, 0.0f},  // vel
-        glm::vec3{1.0f, 1.0f, 0.5f}, // color
-        shader_program               // shader
+        333000.0,                         // mass (related to earth)
+        glm::vec3{0.0f, 0.0f, 0.0f},      // pos
+        glm::vec3{0.0, -0.000005f, 0.0f}, // vel
+        glm::vec3{1.0f, 1.0f, 0.5f},      // color
+        shader_program                    // shader
     );
     sun->is_light_emissor = true;
 
@@ -149,7 +149,7 @@ void App::main_loop()
 
     // Scene object
     std::shared_ptr<axolote::Scene> scene{new axolote::Scene{}};
-    scene->camera.pos = glm::vec3{0.0f, 400.0f, 0.0f};
+    scene->camera.pos = glm::vec3{0.0f, 0.0f, 0.0f};
     scene->camera.orientation = glm::normalize(glm::vec3{.1f, -1.0f, 0.0f});
     scene->camera.speed = 3.0f;
     scene->camera.sensitivity = 10000.0f;
@@ -170,6 +170,10 @@ void App::main_loop()
     double before = glfwGetTime();
     while (!should_close())
     {
+        shader_program.set_uniform_float3(
+            "light_pos", sun->pos.x, sun->pos.y, sun->pos.z
+        );
+
         glClearColor(_color.r, _color.g, _color.b, _color.opacity);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
