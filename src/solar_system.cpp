@@ -14,9 +14,9 @@ std::shared_ptr<CelestialBody> SolarSystem::add_celestial_body(
 
     // Create body
     std::shared_ptr<CelestialBody> body{new CelestialBody{mass, vel}};
-    auto bodyobj = std::make_shared<axolote::Object3D>(
+    axolote::Object3D bodyobj{
         "./resources/models/sphere/sphere.obj", color, mat
-    );
+    };
     body->pos = pos;
     body->add_object(bodyobj);
     body->bind_shader_at(0, shader_program);
